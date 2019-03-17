@@ -1,0 +1,88 @@
+package tree;
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class tree {
+	List<Node> nodeList = new LinkedList<Node>();
+	int root;
+	
+	public tree(){
+		
+	};
+	public tree(String[] array, int i){
+		this.nodeList = CreateTree(array);
+		this.root = i;
+	};
+	
+	public Node getNode(int index) {
+		return nodeList.get(index);
+	}
+	
+	public void setnodeList(List<Node> nodeList) {
+		this.nodeList = nodeList;
+	}
+	public List<Node> getnodeList(){
+		return this.nodeList;
+	}
+
+	public List<Node> CreateTree(String[] array) {
+		
+		List<Node> nodeList1 = new LinkedList<Node>();
+		for(int index = 0; index < array.length; index++) {
+			if(array[index] == null)
+				nodeList.add(null);
+			//	continue;
+			else
+				nodeList.add(new Node(array[index]));
+		}
+			
+		
+		for(int parentIndex = 0; parentIndex < nodeList.size()/2-1; parentIndex++) {
+			nodeList.get(parentIndex).leftnode = nodeList.get(parentIndex*2+1);
+			nodeList.get(parentIndex).rightnode = nodeList.get(parentIndex*2+2);
+		}
+		
+		int lastparentIndex = nodeList.size()/2-1;
+		nodeList.get(lastparentIndex).leftnode = nodeList.get(lastparentIndex*2+1);
+		
+		if(nodeList.size()%2 == 1)
+			nodeList.get(lastparentIndex).rightnode = nodeList.get(lastparentIndex*2+2);
+		
+		//去掉list中的空节点
+		for(int i = 0; i < nodeList.size(); i++) {
+			if(nodeList.get(i) != null)
+				nodeList1.add(nodeList.get(i));
+		}
+		
+		return nodeList1;
+	}
+	
+	//后序遍历,node为根节点
+	int i = 0;
+	public void PostOrderTraversal(Node node) {
+	//	List<Node> nodelist = new LinkedList<Node>();
+	//	if(node == null)
+	//		return;
+		if(node.leftnode!= null)
+			PostOrderTraversal(node.leftnode);
+		if(node.rightnode != null)
+			PostOrderTraversal(node.rightnode);
+		
+		node.index = i+1;
+		nodeList.add(node);
+		nodeList.remove(node);
+	//	return node;
+		System.out.println(node.index);
+	}
+
+	
+	//以第i个节点为根的最左叶子节点的序号
+	public int GetMostLeftNode(int i) {
+		Node n = nodeList.get(i).leftnode;
+		while(n !=null)
+			i = n.index;
+		
+		return i;
+	}
+}

@@ -1,0 +1,18 @@
+package tree;
+
+public class Node {
+	Node leftnode;
+	Node rightnode;
+	String str;
+	
+	Node(String _str){
+		leftnode = null;
+		rightnode = null;
+		
+		if(_str == null)
+			str = null;
+		else 
+			str = _str;
+	}
+
+}

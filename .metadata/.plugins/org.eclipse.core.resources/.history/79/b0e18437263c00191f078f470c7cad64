@@ -1,0 +1,20 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class Treetest {
+
+	@Test
+	public void testCreateTree() {
+		tree t1 = new tree();
+		
+	}
+
+	@Test
+	public void testPostOrderTraversal() {
+		fail("Not yet implemented");
+	}
+
+}

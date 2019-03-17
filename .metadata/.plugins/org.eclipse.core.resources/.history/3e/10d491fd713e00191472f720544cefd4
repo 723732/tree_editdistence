@@ -1,0 +1,69 @@
+package tree;
+
+public class tree_distence {
+
+	int[][] forestdist = new int[500][500];
+	int[][] tree_dist = new int[500][500];
+	public int treedist(tree t1, tree t2, int i, int j) {
+		forestdist[0][0] = 0;
+		for(int i1 = t1.GetMostLeftNode(i); i1 <= i; i1++) {
+			forestdist[i1][0] = forestdist[i1-1][0] + 1;
+		}
+		
+		for(int j1 = t2.GetMostLeftNode(j); j1 <= j; j1++) {
+			forestdist[0][j1] = forestdist[0][j1-1] + 1;
+		}
+		
+		for(int i1 = t1.GetMostLeftNode(i); i1 <= i; i1++) {
+			for(int j1 = t2.GetMostLeftNode(j); j1 <= j; j1++) {
+				 int i_temp = (t1.GetMostLeftNode(i) > i1) ? 0 : i1;
+		         int j_temp = (t2.GetMostLeftNode(j) > j1) ? 0 : j1;
+		            
+				if((t1.GetMostLeftNode(i1) == t1.GetMostLeftNode(i)) && (t2.GetMostLeftNode(j1) == t2.GetMostLeftNode(j))){
+					int cost = (t1.nodeList.get(i1-1).str == t2.nodeList.get(j1-1).str) ? 0 : 1;
+					forestdist[i1][j1] = min(min(forestdist[i_temp][j1] + 1, forestdist[i1][j_temp] + 1),
+                            forestdist[i_temp][j_temp] + cost);
+					tree_dist[i1][j1] = forestdist[i1][j1];
+					
+					System.out.println("tree_dist"+i1+","+j1+"="+tree_dist[i1][j1]);
+				}
+				 else{
+					 ///i在i1的右子树上 ，因此需要分割成两部分计算
+					 int i1_temp = t1.GetMostLeftNode(i1) - 1;
+		             int j1_temp = t2.GetMostLeftNode(j1) - 1;
+
+		             int i_temp2 = (t1.GetMostLeftNode(i - 1) > i1_temp) ? 0 : i1_temp;
+		             int j_temp2 = (t2.GetMostLeftNode(j - 1) > j1_temp) ? 0 : j1_temp;
+		             
+		             forestdist[i1][j1] = min(min(forestdist[i_temp][j1] + 1, forestdist[i1][j_temp] + 1),
+                             forestdist[i_temp2][j_temp2] + tree_dist[i1][j1]);
+				 }
+		            		                		               		            
+			}
+		}
+		return forestdist[i][j];
+	}
+	
+	public int zhang(tree t1, tree t2) {
+		for (int i1 = 1; i1 <= t1.keyroots.size(); i1++)           ///对Tree1的LR_keyroots集合遍历
+	    {
+	        for (int j1 = 1; j1 <= t2.keyroots.size(); j1++)       ///对Tree2的LR_keyroots集合遍历
+	        {
+	        	int i = t1.keyroots.get(i1-1);
+	        	int j = t2.keyroots.get(j1-1);
+
+	        	tree_dist[i][j] = treedist(t1, t2, i, j);
+	        	System.out.println("tree"+i+","+j+"="+tree_dist[i][j]);
+	           // cout<<i<<" "<<j<<" "<<TD[i][j]<<endl;
+	        }
+	    }
+	    return tree_dist[t1.nodeList.size()][t2.nodeList.size()];
+	}
+	
+	private int min(int i, int j) {
+		if(i <= j)
+			return i;
+		else
+			return j;
+	}
+}

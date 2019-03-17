@@ -1,0 +1,9 @@
+package tree;
+
+public class tree_distence {
+
+	int[][] forestdist = new int[500][500];
+	public int treedist(tree t1, tree t2, int i, int j) {
+		
+	}
+}

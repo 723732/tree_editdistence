@@ -1,0 +1,21 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import tree.tree;
+
+public class tree_distenceTest {
+	
+	String[] a = {"f","d","e","a","c",null,null,null,null,"b"};
+	String[] b = {"f","c","e","d",null,null,null,"a","b"};
+	tree t1 = new tree(a,0);
+	tree t2 = new tree(b,0);
+
+	@Test
+	public void testTreedist() {
+		fail("Not yet implemented");
+	}
+
+}

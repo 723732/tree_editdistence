@@ -1,0 +1,33 @@
+package tree;
+
+public class tree_distence {
+
+	int[][] forestdist = new int[500][500];
+	public int treedist(tree t1, tree t2, int i, int j) {
+		forestdist[0][0] = 0;
+		for(int i1 = t1.GetMostLeftNode(i); i1 <= i; i1++) {
+			forestdist[i1][0] = forestdist[i1-1][0] + 1;
+		}
+		
+		for(int j1 = t2.GetMostLeftNode(j); j1 <= j; j1++) {
+			forestdist[0][j1] = forestdist[0][j1-1] + 1;
+		}
+		
+		for(int i1 = t1.GetMostLeftNode(i); i1 <= i; i1++) {
+			for(int j1 = t2.GetMostLeftNode(j); j1 <= j; j1++) {
+				 int i_temp = (t1.GetMostLeftNode(i - 1) > i1 - 1) ? 0 : i1;
+		         int j_temp = (t2.GetMostLeftNode(j - 1) > j1 - 1) ? 0 : j1;
+		            
+				if((t1.GetMostLeftNode(i1) == t1.GetMostLeftNode(i)) && (t2.GetMostLeftNode(j1) == t2.GetMostLeftNode(j))){
+					forestdist[i1][j1] = min(min(forestdist[i_temp][j1] + 1, forestdist[i1][j_temp] + 1),
+                            forestdist[i_temp][j_temp] + 1);
+				}
+			}
+		}
+		return forestdist[i][j];
+	}
+	private Object min(int i, int j) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}
